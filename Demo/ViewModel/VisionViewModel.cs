@@ -104,11 +104,6 @@ namespace MvvmLight1.ViewModel
             string path = OpenFileDialog();
             if (!string.IsNullOrEmpty(path))
             {
-                //BitmapImage image = new BitmapImage();
-                //image.BeginInit();
-                ////image.StreamSource = new MemoryStream(bytes);
-                //image.UriSource = new Uri(path);//(@"C:\Users\miaopengfei\Desktop\1487.jpg");
-                //image.EndInit();
                 ImgSourc = Cv.ReadBitmapImage(path);
             }
         }
