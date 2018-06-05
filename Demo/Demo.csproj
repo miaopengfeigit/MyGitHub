@@ -221,6 +221,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Content Include="Packages\MaterialDesignColors.dll" />
+    <Content Include="Packages\MaterialDesignThemes.Wpf.dll" />
+    <Content Include="Packages\Microsoft.Expression.Interactions.dll" />
+    <Content Include="Packages\Microsoft.WindowsAPICodePack.dll" />
+    <Content Include="Packages\Microsoft.WindowsAPICodePack.Shell.dll" />
+    <Content Include="Packages\System.Windows.Interactivity.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
