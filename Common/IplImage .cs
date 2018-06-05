@@ -213,7 +213,6 @@ namespace Common
     [StructLayout(LayoutKind.Sequential)]
     public struct MIplImage
     {
-
         //    
         // 摘要:    
         //     sizeof(IplImage)    

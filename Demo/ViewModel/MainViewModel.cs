@@ -21,7 +21,6 @@ namespace MvvmLight1.ViewModel
                  new DemoItem("Palette", new View.PaletteSelector(), PackIconKind.Palette),
                  new DemoItem("ConvertFile", new View.ConvertFile(), PackIconKind.Key),
                  new DemoItem("Vision", new View.Vision(), PackIconKind.Video),
-                 new DemoItem("PageCanvas", new View.PageCanvas(), PackIconKind.AccessPoint),
             };
             ChangeUI();
             SR.LanguageChanged += (s, e) => ChangeUI();

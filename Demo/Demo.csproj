@@ -46,10 +46,6 @@
     <Reference Include="MaterialDesignThemes.Wpf">
       <HintPath>..\packages\MaterialDesignThemes\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Interaction DLL\Microsoft.Expression.Interactions.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.WindowsAPICodePack.Core.1.1.0\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
@@ -60,10 +56,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Interaction DLL\System.Windows.Interactivity.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -91,16 +83,11 @@
     <Compile Include="Model\NotifyPropertyChangedExtension.cs" />
     <Compile Include="ViewModel\AnotherCommandImplementation.cs" />
     <Compile Include="ViewModel\DelegateCommand.cs" />
-    <Compile Include="ViewModel\AddPathInCanvasBehavior.cs" />
-    <Compile Include="ViewModel\MyCanvasAdorner.cs" />
-    <Compile Include="ViewModel\TransformInCanvasBehavior.cs" />
-    <Compile Include="ViewModel\DragInCanvasBehavior.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\VisionViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ConvertFileViewModel.cs" />
     <Compile Include="ViewModel\PaletteSelectorViewModel.cs" />
-    <Compile Include="ViewModel\ZoomBehavior.cs" />
     <Compile Include="View\PageCanvas.xaml.cs">
       <DependentUpon>PageCanvas.xaml</DependentUpon>
     </Compile>
@@ -214,10 +201,6 @@
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{f2a711e1-9a7b-4881-9a37-0ce820b8c906}</Project>
       <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\UICommon\UICommon.csproj">
-      <Project>{fc3fac70-a4bb-45ef-b7ca-4a74368e5d81}</Project>
-      <Name>UICommon</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
