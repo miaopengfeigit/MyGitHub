@@ -490,32 +490,31 @@ namespace Common
             }
             return BitmapSource.Create(m.width, m.height, 1, 1, pixelFormat, null, m.imageData, m.imageSize, m.widthStep);
         }
+        /*
+        public static BitmapSource BitmapToBitmapImage(Bitmap bitmap)
+        {
+            IntPtr ptr = bitmap.GetHbitmap();//从GDI+ Bitmap创建GDI位图对象
+            BitmapSource bs = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
+                ptr,
+                IntPtr.Zero,
+                Int32Rect.Empty,
+                System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
+            DeleteObject(ptr); //release the HBitmap
+            return bs;
+        }
 
-        //// Bitmap --> BitmapImage
-        //public static BitmapSource BitmapToBitmapImage(Bitmap bitmap)
-        //{
-        //    IntPtr ptr = bitmap.GetHbitmap();//从GDI+ Bitmap创建GDI位图对象
-        //    BitmapSource bs = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
-        //        ptr,
-        //        IntPtr.Zero,
-        //        Int32Rect.Empty,
-        //        System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
-        //    DeleteObject(ptr); //release the HBitmap
-        //    return bs;
-        //}
+        
+        public static Bitmap BitmapImageToBitmap(BitmapSource bitmapSource)
+        {
+            System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(bitmapSource.PixelWidth, bitmapSource.PixelHeight, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
 
+            System.Drawing.Imaging.BitmapData data = bmp.LockBits(
+            new System.Drawing.Rectangle(System.Drawing.Point.Empty, bmp.Size), System.Drawing.Imaging.ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
 
-        //// BitmapImage --> Bitmap
-        //public static Bitmap BitmapImageToBitmap(BitmapSource bitmapSource)
-        //{
-        //    System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(bitmapSource.PixelWidth, bitmapSource.PixelHeight, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+            bitmapSource.CopyPixels(Int32Rect.Empty, data.Scan0, data.Height * data.Stride, data.Stride); bmp.UnlockBits(data);
+            return bmp;
 
-        //    System.Drawing.Imaging.BitmapData data = bmp.LockBits(
-        //    new System.Drawing.Rectangle(System.Drawing.Point.Empty, bmp.Size), System.Drawing.Imaging.ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
-
-        //    bitmapSource.CopyPixels(Int32Rect.Empty, data.Scan0, data.Height * data.Stride, data.Stride); bmp.UnlockBits(data);
-        //    return bmp;
-
-        //}
+        }
+        */
     }
 }
