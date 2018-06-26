@@ -9,44 +9,24 @@ namespace MvvmLight1.ViewModel
 {
     public class DelegateCommand : ICommand
     {
-        #region Fields
-
-        readonly Action<object> _execute;
-        readonly Predicate<object> _canExecute;
-
-        #endregion
-
-        #region Constructors
+        private readonly Action<object> _execute;
+        private readonly Func<object, bool> _canExecute;
 
         public DelegateCommand(Action<object> execute) : this(execute, null)
         {
         }
 
-        public DelegateCommand(Action<object> execute, Predicate<object> canExecute)
+        public DelegateCommand(Action<object> execute, Func<object, bool> canExecute)
         {
-            if (execute == null)
-                throw new ArgumentNullException("execute");
+            if (execute == null) throw new ArgumentNullException(nameof(execute));
 
             _execute = execute;
-            _canExecute = canExecute;
+            _canExecute = canExecute ?? (x => true);
         }
-
-        #endregion
-
-        #region ICommand Members
 
         public bool CanExecute(object parameter)
         {
-            return _canExecute == null ? true : _canExecute(parameter);
-        }
-        public event EventHandler CanExecuteChanged;
-
-        // The CanExecuteChanged is automatically registered by command binding, we can assume that it has some execution logic 
-        // to update the button's enabled\disabled state(though we cannot see). So raises this event will cause the button's state be updated.
-        public void RaiseCanExecuteChanged()
-        {
-            if (CanExecuteChanged != null)
-                CanExecuteChanged(this, EventArgs.Empty);
+            return _canExecute(parameter);
         }
 
         public void Execute(object parameter)
@@ -54,6 +34,21 @@ namespace MvvmLight1.ViewModel
             _execute(parameter);
         }
 
-        #endregion
+        public event EventHandler CanExecuteChanged
+        {
+            add
+            {
+                CommandManager.RequerySuggested += value;
+            }
+            remove
+            {
+                CommandManager.RequerySuggested -= value;
+            }
+        }
+
+        public void Refresh()
+        {
+            CommandManager.InvalidateRequerySuggested();
+        }
     }
 }

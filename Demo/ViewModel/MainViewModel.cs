@@ -25,51 +25,13 @@ namespace MvvmLight1.ViewModel
             ChangeUI();
             SR.LanguageChanged += (s, e) => ChangeUI();
         }
-
-        #region Singleton
-        //private static readonly object SyncObject = new object();
-        //private static MainViewModel instance;
-        //private MainViewModel()
+        
+        //private DemoItem[] demoItems;
+        public DemoItem[] DemoItems { get; set; }
         //{
-        //    DemoItems = new DemoItem[]
-        //    {
-        //         new DemoItem("Home", new View.Home(), PackIconKind.Home),
-        //         new DemoItem("Palette", new View.PaletteSelector(), PackIconKind.Palette),
-        //         new DemoItem("ConvertFile", new View.ConvertFile(), PackIconKind.Key),
-        //         new DemoItem("Vision", new View.Vision(), PackIconKind.Video),
-        //    };
-        //    ChangeUI();
-        //    SR.LanguageChanged += (s, e) => ChangeUI();
+        //    get { return demoItems; }
+        //    set { SetProperty(ref demoItems, value); }
         //}
-
-
-
-        //public static MainViewModel Instance
-        //{
-        //    get
-        //    {
-        //        lock (SyncObject)
-        //        {
-        //            return instance ?? (instance = new MainViewModel());
-        //        }
-        //    }
-        //}
-
-        #endregion
-
-        private DemoItem[] demoItems;
-        public DemoItem[] DemoItems
-        {
-            get
-            {
-                return demoItems;
-            }
-
-            set
-            {
-                SetProperty(ref demoItems, value);
-            }
-        }
 
         private void ChangeUI()
         {

@@ -1,4 +1,5 @@
 using MaterialDesignThemes.Wpf;
+using MvvmLight1.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +12,7 @@ using System.Windows.Markup;
 
 namespace MvvmLight1.Model
 {
-    public class DemoItem : INotifyPropertyChanged
+    public class DemoItem: ViewModelBase
     {
         private PackIconKind _icon;
         private string _name;
@@ -31,52 +32,52 @@ namespace MvvmLight1.Model
         public PackIconKind Icon
         {
             get { return _icon; }
-            set { this.MutateVerbose(ref _icon, value, RaisePropertyChanged()); }
+            set { SetProperty(ref _icon, value); }
         }
 
         public string Name
         {
             get { return _name; }
-            set { this.MutateVerbose(ref _name, value, RaisePropertyChanged()); }
+            set { SetProperty(ref _name, value); }
         }
 
         public string DisplayName
         {
             get { return _displayName; }
-            set { this.MutateVerbose(ref _displayName, value, RaisePropertyChanged()); }
+            set { SetProperty(ref _displayName, value); }
         }
 
         public object Content
         {
             get { return _content; }
-            set { this.MutateVerbose(ref _content, value, RaisePropertyChanged()); }
+            set { SetProperty(ref _content, value); }
         }
 
         public ScrollBarVisibility HorizontalScrollBarVisibilityRequirement
         {
             get { return _horizontalScrollBarVisibilityRequirement; }
-            set { this.MutateVerbose(ref _horizontalScrollBarVisibilityRequirement, value, RaisePropertyChanged()); }
+            set { SetProperty(ref _horizontalScrollBarVisibilityRequirement, value); }
         }
 
         public ScrollBarVisibility VerticalScrollBarVisibilityRequirement
         {
             get { return _verticalScrollBarVisibilityRequirement; }
-            set { this.MutateVerbose(ref _verticalScrollBarVisibilityRequirement, value, RaisePropertyChanged()); }
+            set { SetProperty(ref _verticalScrollBarVisibilityRequirement, value); }
         }
 
         public Thickness MarginRequirement
         {
             get { return _marginRequirement; }
-            set { this.MutateVerbose(ref _marginRequirement, value, RaisePropertyChanged()); }
+            set { SetProperty(ref _marginRequirement, value); }
         }
 
-        //public IEnumerable<DocumentationLink> Documentation { get; }
+        ////public IEnumerable<DocumentationLink> Documentation { get; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        //public event PropertyChangedEventHandler PropertyChanged;
 
-        private Action<PropertyChangedEventArgs> RaisePropertyChanged()
-        {
-            return args => PropertyChanged?.Invoke(this, args);
-        }
+        //private Action<PropertyChangedEventArgs> RaisePropertyChanged()
+        //{
+        //    return args => PropertyChanged?.Invoke(this, args);
+        //}
     }
 }

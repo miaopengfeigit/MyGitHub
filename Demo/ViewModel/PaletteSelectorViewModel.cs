@@ -20,7 +20,7 @@ namespace MvvmLight1.ViewModel
             Swatches = new SwatchesProvider().Swatches;            
         }
 
-        public ICommand ToggleBaseCommand { get; } = new AnotherCommandImplementation(o => ApplyBase((bool)o));
+        public ICommand ToggleBaseCommand { get; } = new DelegateCommand(o => ApplyBase((bool)o));
 
         private static void ApplyBase(bool isDark)
         {
@@ -29,14 +29,14 @@ namespace MvvmLight1.ViewModel
 
         public IEnumerable<Swatch> Swatches { get; }
 
-        public ICommand ApplyPrimaryCommand { get; } = new AnotherCommandImplementation(o => ApplyPrimary((Swatch)o));
+        public ICommand ApplyPrimaryCommand { get; } = new DelegateCommand(o => ApplyPrimary((Swatch)o));
 
         private static void ApplyPrimary(Swatch swatch)
         {
             new PaletteHelper().ReplacePrimaryColor(swatch);
         }
 
-        public ICommand ApplyAccentCommand { get; } = new AnotherCommandImplementation(o => ApplyAccent((Swatch)o));
+        public ICommand ApplyAccentCommand { get; } = new DelegateCommand(o => ApplyAccent((Swatch)o));
         
         private static void ApplyAccent(Swatch swatch)
         {

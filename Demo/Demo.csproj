@@ -76,12 +76,7 @@
     <Compile Include="Controls\RectangleControl.xaml.cs">
       <DependentUpon>RectangleControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\DataItem.cs" />
-    <Compile Include="Model\DataService.cs" />
     <Compile Include="Model\DemoItem.cs" />
-    <Compile Include="Model\IDataService.cs" />
-    <Compile Include="Model\NotifyPropertyChangedExtension.cs" />
-    <Compile Include="ViewModel\AnotherCommandImplementation.cs" />
     <Compile Include="ViewModel\DelegateCommand.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\VisionViewModel.cs" />
