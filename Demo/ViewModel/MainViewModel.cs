@@ -1,7 +1,10 @@
 
 using Common;
 using MaterialDesignThemes.Wpf;
+using MvvmLight1.Controls;
 using MvvmLight1.Model;
+using System.Windows;
+using System.Windows.Input;
 
 namespace MvvmLight1.ViewModel
 {
@@ -25,13 +28,10 @@ namespace MvvmLight1.ViewModel
             ChangeUI();
             SR.LanguageChanged += (s, e) => ChangeUI();
         }
-        
-        //private DemoItem[] demoItems;
+
         public DemoItem[] DemoItems { get; set; }
-        //{
-        //    get { return demoItems; }
-        //    set { SetProperty(ref demoItems, value); }
-        //}
+
+        public string ShowString { get; set; }
 
         private void ChangeUI()
         {
@@ -40,5 +40,27 @@ namespace MvvmLight1.ViewModel
                 item.DisplayName = SR.GetString(item.Name);
             }
         }
+
+        public ICommand ClosingCommand => new DelegateCommand(ClosingWindows);
+        
+        private async void ClosingWindows(object o)
+        {
+
+            //var sampleMessageDialog = new SampleMessageDialog
+            //{
+            //    Message = { Text = ((ButtonBase)sender).Content.ToString() }
+            //};
+            //await DialogHost.Show(sampleMessageDialog, "RootDialog");
+            ShowString = "确定关闭程序？";
+            var view = new SampleDialog
+            {
+                DataContext = this
+            };
+            
+            var result = await DialogHost.Show(view, "RootDialog");
+            if((bool)result) Application.Current.Shutdown();
+        }
+
+        
     }
 }

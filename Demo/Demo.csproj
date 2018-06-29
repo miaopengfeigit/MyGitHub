@@ -76,6 +76,10 @@
     <Compile Include="Controls\RectangleControl.xaml.cs">
       <DependentUpon>RectangleControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Sample4Dialog.xaml.cs" />
+    <Compile Include="Controls\SampleDialog.xaml.cs" />
+    <Compile Include="Controls\SampleMessageDialog.xaml.cs" />
+    <Compile Include="Controls\SampleProgressDialog.xaml.cs" />
     <Compile Include="Model\DemoItem.cs" />
     <Compile Include="ViewModel\DelegateCommand.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
@@ -102,6 +106,22 @@
       <DependentUpon>PaletteSelector.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\RectangleControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Sample4Dialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SampleDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SampleMessageDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SampleProgressDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

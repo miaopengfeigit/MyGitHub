@@ -4,6 +4,7 @@ using System.Windows.Input;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using MaterialDesignThemes.Wpf;
+using MvvmLight1.Controls;
 
 namespace MvvmLight1
 {
@@ -30,19 +31,32 @@ namespace MvvmLight1
                 if (dependencyObject is ScrollBar) return;
                 dependencyObject = VisualTreeHelper.GetParent(dependencyObject);
             }
-            
+
             MenuToggleButton.IsChecked = false;
         }
 
         private async void MenuPopupButton_OnClick(object sender, RoutedEventArgs e)
         {
-            
+
             //var sampleMessageDialog = new SampleMessageDialog
             //{
             //    Message = { Text = ((ButtonBase)sender).Content.ToString() }
             //};
+            //await DialogHost.Show(sampleMessageDialog, "RootDialog");
 
-            await DialogHost.Show("sampleMessageDialog", "RootDialog");
+            //var view = new SampleDialog
+            //{
+            //    DataContext = this
+            //};
+
+            ////show the dialog
+            //var result = await DialogHost.Show(view, "RootDialog");
+            //MessageBox.Show("Dialog was closed, the CommandParameter used to close it was: " + (result ?? "NULL"));
+        }
+
+        private void ClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
+        {
+            MessageBox.Show(sender.ToString());
         }
     }
 }
