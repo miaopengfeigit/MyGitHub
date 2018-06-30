@@ -76,14 +76,14 @@
                                         x:Name="MenuToggleButton"/>
                         <materialDesign:PopupBox DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False">
                             <StackPanel>
-                                <Button Content="Minimized" Click="MenuPopupButtonMinimized_OnClick"/>
-                                <Button Content="Maximized" Click="MenuPopupButtonMaximized_OnClick"/>
+                                <Button Content="{DynamicResource WindowStateMinimized}" Click="MenuPopupButtonMinimized_OnClick"/>
+                                <Button Content="{DynamicResource WindowStateMaximized}" Click="MenuPopupButtonMaximized_OnClick"/>
                                 <Button Content="Can't Touch This" IsEnabled="False" />
                                 <Separator/>
-                                <Button Content="Goodbye" Command="{Binding ClosingCommand}"/>
+                                <Button Content="{DynamicResource Exit}" Command="{Binding ClosingCommand}"/>
                             </StackPanel>
                         </materialDesign:PopupBox>
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22">Material Design In XAML Toolkit</TextBlock>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" Text="{DynamicResource MainWindowTitle}"/>
                     </DockPanel>
                 </materialDesign:ColorZone>
                 <Grid>

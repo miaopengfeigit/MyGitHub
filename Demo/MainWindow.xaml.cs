@@ -5,6 +5,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using MaterialDesignThemes.Wpf;
 using MvvmLight1.Controls;
+using Common;
 
 namespace MvvmLight1
 {
@@ -51,12 +52,12 @@ namespace MvvmLight1
             if (WindowState == WindowState.Maximized)
             {
                 WindowState = WindowState.Normal;
-                bt.Content = "Maximized";
+                bt.Content = SR.GetString("WindowStateMaximized");
             }
             else
             {
                 WindowState = WindowState.Maximized;
-                bt.Content = "Normal";
+                bt.Content = SR.GetString("WindowStateNormal");
             }
                 
         }
