@@ -3,6 +3,9 @@ using Common;
 using MaterialDesignThemes.Wpf;
 using MvvmLight1.Controls;
 using MvvmLight1.Model;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -30,9 +33,7 @@ namespace MvvmLight1.ViewModel
         }
 
         public DemoItem[] DemoItems { get; set; }
-
-        public string ShowString { get; set; }
-
+        
         private void ChangeUI()
         {
             foreach (var item in DemoItems)
@@ -45,22 +46,32 @@ namespace MvvmLight1.ViewModel
         
         private async void ClosingWindows(object o)
         {
-
-            //var sampleMessageDialog = new SampleMessageDialog
-            //{
-            //    Message = { Text = ((ButtonBase)sender).Content.ToString() }
-            //};
-            //await DialogHost.Show(sampleMessageDialog, "RootDialog");
-            ShowString = "确定关闭程序？";
-            var view = new SampleDialog
-            {
-                DataContext = this
-            };
+            var view = new SampleDialog{ Message = { Text = "确定关闭程序？" }};
             
-            var result = await DialogHost.Show(view, "RootDialog");
-            if((bool)result) Application.Current.Shutdown();
+            await DialogHost.Show(view, "RootDialog", ExtendedOpenedEventHandler, ExtendedClosingEventHandler);
+            
         }
 
-        
+        private void ExtendedOpenedEventHandler(object sender, DialogOpenedEventArgs eventargs)
+        {
+            Console.WriteLine("You could intercept the open and affect the dialog using eventArgs.Session.");
+        }
+
+        private void ExtendedClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
+        {
+            if ((bool)eventArgs.Parameter == false) return;
+
+            //OK, lets cancel the close...
+            eventArgs.Cancel();
+            SR.ApplicationShutdown();
+            //...now, lets update the "session" with some new content!
+            eventArgs.Session.UpdateContent(new SampleProgressDialog());
+            //note, you can also grab the session when the dialog opens via the DialogOpenedEventHandler
+            
+            //lets run a fake operation for 3 seconds then close this baby.
+            Task.Delay(TimeSpan.FromSeconds(1))
+                .ContinueWith((t, _) => { eventArgs.Session.Close(false); Application.Current.Shutdown(); }, null,
+                    TaskScheduler.FromCurrentSynchronizationContext());
+        }
     }
 }

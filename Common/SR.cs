@@ -8,6 +8,11 @@ namespace Common
 {
     public class SR
     {
+        public static event EventHandler ApplicationExit;
+        public static void ApplicationShutdown()
+        {
+            ApplicationExit(null, EventArgs.Empty);
+        }
         /// <summary>
         /// 当语言变更时发生
         /// </summary>

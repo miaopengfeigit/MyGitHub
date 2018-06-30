@@ -47,9 +47,16 @@ namespace MvvmLight1.ViewModel
         //#endregion
         public VisionViewModel()
         {
-            
+            //Application.Current.Exit += OnExit;
+            SR.ApplicationExit += OnExit;
         }
-        
+
+        private void OnExit(object sender, EventArgs e)
+        {
+            stop = false;
+        }
+
+
         bool stop = false;
         
         private RectangleControl selectPath = new RectangleControl();
@@ -143,11 +150,11 @@ namespace MvvmLight1.ViewModel
             {
                 while (stop)
                 {
-                    Thread.Sleep(30);
                     Application.Current.Dispatcher.Invoke(new Action(()=>
                     {
                         ImgSourc = Cv.ReadBitmapFrame();
                     }));
+                    Thread.Sleep(30);
                 }
                 Cv.ReleaseCamera();
             }
@@ -223,6 +230,7 @@ namespace MvvmLight1.ViewModel
                 return string.Empty;
         }
 
+        
         #endregion
     }
     

@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="0"
                     Margin="0 16 0 0">
-            <TextBlock Text="{Binding ShowString}"/>
+            <TextBlock x:Name="Message"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1"
                     Margin="0 16 0 0">

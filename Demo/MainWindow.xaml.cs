@@ -34,29 +34,31 @@ namespace MvvmLight1
 
             MenuToggleButton.IsChecked = false;
         }
-
-        private async void MenuPopupButton_OnClick(object sender, RoutedEventArgs e)
+        
+        private void ColorZone_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
-            //var sampleMessageDialog = new SampleMessageDialog
-            //{
-            //    Message = { Text = ((ButtonBase)sender).Content.ToString() }
-            //};
-            //await DialogHost.Show(sampleMessageDialog, "RootDialog");
-
-            //var view = new SampleDialog
-            //{
-            //    DataContext = this
-            //};
-
-            ////show the dialog
-            //var result = await DialogHost.Show(view, "RootDialog");
-            //MessageBox.Show("Dialog was closed, the CommandParameter used to close it was: " + (result ?? "NULL"));
+            DragMove();
         }
 
-        private void ClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
+        private void MenuPopupButtonMinimized_OnClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(sender.ToString());
+            WindowState = WindowState.Minimized;
+        }
+
+        private void MenuPopupButtonMaximized_OnClick(object sender, RoutedEventArgs e)
+        {
+            var bt = sender as System.Windows.Controls.Button;
+            if (WindowState == WindowState.Maximized)
+            {
+                WindowState = WindowState.Normal;
+                bt.Content = "Maximized";
+            }
+            else
+            {
+                WindowState = WindowState.Maximized;
+                bt.Content = "Normal";
+            }
+                
         }
     }
 }
