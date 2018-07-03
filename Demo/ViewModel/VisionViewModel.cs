@@ -39,12 +39,12 @@ namespace MvvmLight1.ViewModel
 
 
         bool stop = false;
-        
+
         private RectangleControl selectPath = new RectangleControl();
         public RectangleControl SelectPath
         {
-            get{   return selectPath; }
-            set{    SetProperty(ref selectPath, value);}
+            get { return selectPath; }
+            set { SetProperty(ref selectPath, value); }
         }
 
         private ObservableCollection<RectangleControl> canvasRectangle = new ObservableCollection<RectangleControl>();
@@ -62,22 +62,22 @@ namespace MvvmLight1.ViewModel
         private BitmapSource imgSourc;
         public BitmapSource ImgSourc
         {
-            get{  return imgSourc; }
-            set {    SetProperty(ref imgSourc, value);}
+            get { return imgSourc; }
+            set { SetProperty(ref imgSourc, value); }
         }
 
         private BitmapSource roiSourc;
         public BitmapSource RoiSourc
         {
-            get  {  return roiSourc;}
-            set{  SetProperty(ref roiSourc, value);}
+            get { return roiSourc; }
+            set { SetProperty(ref roiSourc, value); }
         }
 
         private string str;
         public string Str
         {
-            get{     return str; }
-            set{ str = value; SetProperty(ref str, value); }
+            get { return str; }
+            set { str = value; SetProperty(ref str, value); }
         }
         #endregion
 
@@ -86,7 +86,7 @@ namespace MvvmLight1.ViewModel
         {
             get { return new DelegateCommand(o => ExcuteSourcePathCmd()); }
         }
-        
+
         private void ExcuteSourcePathCmd()
         {
             string path = OpenFileDialog();
@@ -107,7 +107,7 @@ namespace MvvmLight1.ViewModel
             RectangleControl rc = new RectangleControl();
             rc.RectWidth = 100;
             rc.RectHeight = 100;
-            rc.RectX =100;
+            rc.RectX = 100;
             rc.RectY = 100;
             CanvasRectangle.Add(rc);
             SelectPath = rc;
@@ -132,7 +132,7 @@ namespace MvvmLight1.ViewModel
             {
                 while (stop)
                 {
-                    Application.Current.Dispatcher.Invoke(new Action(()=>
+                    Application.Current.Dispatcher.Invoke(new Action(() =>
                     {
                         ImgSourc = Cv.ReadBitmapFrame();
                     }));
@@ -159,14 +159,22 @@ namespace MvvmLight1.ViewModel
 
         private void ExcuteRoiCmd()
         {
+            var canvas = (Canvas)VisualTreeHelper.GetParent(SelectPath);
+            double w = ImgSourc.PixelWidth / canvas.ActualWidth;
+            double h = ImgSourc.PixelHeight / canvas.ActualHeight;
             Rect rect = new Rect();
-            rect.X = SelectPath.RectX;
-            rect.Y = SelectPath.RectY;
-            rect.Width = SelectPath.RectWidth;
-            rect.Height = SelectPath.RectHeight;
+            rect.X = SelectPath.RectX * w;
+            rect.Y = SelectPath.RectY * h;
+            rect.Width = SelectPath.RectWidth * w;
+            rect.Height = SelectPath.RectHeight * h;
+
             RoiSourc = Cv.ReadBitmapFrameROI(rect);
             CanvasRectangle.Clear();
         }
+
+        public double Wi { get; set; }
+
+        public double He { get; set; }
 
         public ICommand MatchTemplateCmd
         {
@@ -196,7 +204,7 @@ namespace MvvmLight1.ViewModel
                 Cv.ReleaseCamera();
             }
         }
-        
+
         #endregion
 
         #region 方法
@@ -212,9 +220,9 @@ namespace MvvmLight1.ViewModel
                 return string.Empty;
         }
 
-        
+
         #endregion
     }
-    
-    
+
+
 }

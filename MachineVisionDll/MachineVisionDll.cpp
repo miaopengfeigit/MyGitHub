@@ -32,7 +32,16 @@ DLL_API IplImage _stdcall FindCircleCenter()
 
 DLL_API bool _stdcall OpenCamera(int id)
 {
-	return capture.open(id);
+	if (capture.open(id))
+	{
+		capture.set(CV_CAP_PROP_FRAME_WIDTH, 1280);
+		capture.set(CV_CAP_PROP_FRAME_HEIGHT, 720);
+		return true;
+	}
+	else
+	{ 
+		return false;
+	}
 }
 
 DLL_API void _stdcall ReleaseCamera()
