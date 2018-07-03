@@ -25,25 +25,6 @@ namespace MvvmLight1.ViewModel
 {
     public class VisionViewModel : ViewModelBase
     {
-        //#region Singleton
-        //private static readonly object syncObject = new object();
-        //private static VisionViewModel instance;
-        //private VisionViewModel()
-        //{
-           
-        //}
-
-        //public static VisionViewModel Instance
-        //{
-        //    get
-        //    {
-        //        lock (syncObject)
-        //        {
-        //            return instance ?? (instance = new VisionViewModel());
-        //        }
-        //    }
-        //}
-
         //#endregion
         public VisionViewModel()
         {
@@ -72,8 +53,8 @@ namespace MvvmLight1.ViewModel
             get { return canvasRectangle; }
             set { canvasRectangle = value; }
         }
-        
-        
+        private const string LOG_IDENTITY = "Vision";
+
         #region 属性
 
 
@@ -112,6 +93,7 @@ namespace MvvmLight1.ViewModel
             if (!string.IsNullOrEmpty(path))
             {
                 ImgSourc = Cv.ReadBitmapImage(path);
+                NLog.Info(LOG_IDENTITY, "打开图片 {0}", path);
             }
         }
 
