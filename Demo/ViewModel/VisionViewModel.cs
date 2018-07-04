@@ -28,7 +28,6 @@ namespace MvvmLight1.ViewModel
         //#endregion
         public VisionViewModel()
         {
-            //Application.Current.Exit += OnExit;
             SR.ApplicationExit += OnExit;
         }
 
@@ -37,7 +36,7 @@ namespace MvvmLight1.ViewModel
             stop = false;
         }
 
-
+        //Canvas canvas;
         bool stop = false;
 
         private RectangleControl selectPath = new RectangleControl();
@@ -110,9 +109,18 @@ namespace MvvmLight1.ViewModel
             rc.RectX = 100;
             rc.RectY = 100;
             CanvasRectangle.Add(rc);
-            SelectPath = rc;
+            rc.PreviewMouseDown += OnMouseDown;
+            //if (canvas == null)
+            //{
+            //    canvas = (Canvas)VisualTreeHelper.GetParent(rc);
+            //}
+
         }
 
+        private void OnMouseDown(object send, MouseButtonEventArgs e)
+        {
+            SelectPath = send as RectangleControl;
+        }
         public ICommand OpenCameraCmd
         {
             get { return new DelegateCommand(o => ExcuteOpenCameraCmd()); }
@@ -162,19 +170,17 @@ namespace MvvmLight1.ViewModel
             var canvas = (Canvas)VisualTreeHelper.GetParent(SelectPath);
             double w = ImgSourc.PixelWidth / canvas.ActualWidth;
             double h = ImgSourc.PixelHeight / canvas.ActualHeight;
-            Rect rect = new Rect();
-            rect.X = SelectPath.RectX * w;
-            rect.Y = SelectPath.RectY * h;
-            rect.Width = SelectPath.RectWidth * w;
-            rect.Height = SelectPath.RectHeight * h;
+            Rect rect = new Rect
+            {
+                X = SelectPath.RectX * w,
+                Y = SelectPath.RectY * h,
+                Width = SelectPath.RectWidth * w,
+                Height = SelectPath.RectHeight * h
+            };
 
             RoiSourc = Cv.ReadBitmapFrameROI(rect);
-            CanvasRectangle.Clear();
+            //CanvasRectangle.Clear();
         }
-
-        public double Wi { get; set; }
-
-        public double He { get; set; }
 
         public ICommand MatchTemplateCmd
         {

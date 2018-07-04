@@ -114,7 +114,7 @@
                 </ItemsControl>-->
         
         <materialDesign:PopupBox Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
-                                 HorizontalAlignment="Right" VerticalAlignment="Bottom" 
+                                 HorizontalAlignment="Right" VerticalAlignment="Bottom"
                                  Margin="32" Grid.Row="1">
             <StackPanel>
                 
