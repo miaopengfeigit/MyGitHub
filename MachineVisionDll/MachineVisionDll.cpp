@@ -13,29 +13,12 @@ DLL_API IplImage _stdcall ReadImage(char* fileName)
 	return IplImage(image);
 }
 
-DLL_API void _stdcall ShowImage()
-{
-	IplImage* src = cvLoadImage("1.jpg");
-	cvShowImage("Image", src);
-}
-
-DLL_API IplImage _stdcall FindCircleCenter()
-{
-	Mat Img = imread("1.jpg");
-	IplImage pBinary;
-	pBinary.width = Img.size().width;
-	pBinary.height = Img.size().height;
-	pBinary.widthStep = Img.step;
-	pBinary.imageData = (char*)Img.data;
-	return pBinary;
-}
-
 DLL_API bool _stdcall OpenCamera(int id)
 {
 	if (capture.open(id))
 	{
-		capture.set(CV_CAP_PROP_FRAME_WIDTH, 1280);
-		capture.set(CV_CAP_PROP_FRAME_HEIGHT, 720);
+		capture.set(CV_CAP_PROP_FRAME_WIDTH, capture.get(CV_CAP_PROP_FRAME_WIDTH));
+		capture.set(CV_CAP_PROP_FRAME_HEIGHT, capture.get(CV_CAP_PROP_FRAME_HEIGHT));
 		return true;
 	}
 	else
@@ -47,6 +30,11 @@ DLL_API bool _stdcall OpenCamera(int id)
 DLL_API void _stdcall ReleaseCamera()
 {
 	 capture.release();
+}
+
+DLL_API double _stdcall GetFps()
+{
+	return capture.get(CV_CAP_PROP_FPS);
 }
 
 DLL_API IplImage  _stdcall ReadFrame()

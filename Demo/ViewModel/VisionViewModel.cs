@@ -33,11 +33,12 @@ namespace MvvmLight1.ViewModel
 
         private void OnExit(object sender, EventArgs e)
         {
-            stop = false;
+            stop = true;
         }
-
-        //Canvas canvas;
+        
+        public Canvas Canvas { get ; set; }
         bool stop = false;
+        int mode = 0;
 
         private RectangleControl selectPath = new RectangleControl();
         public RectangleControl SelectPath
@@ -46,11 +47,11 @@ namespace MvvmLight1.ViewModel
             set { SetProperty(ref selectPath, value); }
         }
 
-        private ObservableCollection<RectangleControl> canvasRectangle = new ObservableCollection<RectangleControl>();
-        public ObservableCollection<RectangleControl> CanvasRectangle
+        private ObservableCollection<UIElement> uiElements = new ObservableCollection<UIElement>();
+        public ObservableCollection<UIElement> UIElements
         {
-            get { return canvasRectangle; }
-            set { canvasRectangle = value; }
+            get { return uiElements; }
+            set { uiElements = value; }
         }
         private const string LOG_IDENTITY = "Vision";
 
@@ -76,7 +77,7 @@ namespace MvvmLight1.ViewModel
         public string Str
         {
             get { return str; }
-            set { str = value; SetProperty(ref str, value); }
+            set { SetProperty(ref str, value); }
         }
         #endregion
 
@@ -103,18 +104,52 @@ namespace MvvmLight1.ViewModel
 
         private void ExcuteAddPathCmd()
         {
-            RectangleControl rc = new RectangleControl();
-            rc.RectWidth = 100;
-            rc.RectHeight = 100;
-            rc.RectX = 100;
-            rc.RectY = 100;
-            CanvasRectangle.Add(rc);
-            rc.PreviewMouseDown += OnMouseDown;
-            //if (canvas == null)
-            //{
-            //    canvas = (Canvas)VisualTreeHelper.GetParent(rc);
-            //}
+            mode = 0;
+            if (Canvas==null)
+            {
+                var ue = new UIElement();
+                UIElements.Add(ue);
+                Canvas = (Canvas)VisualTreeHelper.GetParent(ue);
+                UIElements.Clear();
+            }
+            
 
+            Canvas.PreviewMouseLeftButtonDown += OnCanvasMouseLeftButtonDown;
+
+
+
+        }
+
+        private void OnCanvasMouseLeftButtonDown(object send, MouseButtonEventArgs e)
+        {
+            Point p = e.GetPosition(Canvas);
+            RectangleControl rc = new RectangleControl
+            {
+                RectWidth = 0,
+                RectHeight = 0,
+                RectX = p.X,
+                RectY = p.Y,
+            };
+            rc.PreviewMouseLeftButtonDown += OnMouseDown;
+            UIElements.Add(rc);
+            Canvas.PreviewMouseMove += OnCanvasMouseMove;
+            Canvas.PreviewMouseLeftButtonUp += OnCanvasMouseLeftButtonUp;
+            SelectPath = rc;
+        }
+
+        private void OnCanvasMouseMove(object send, MouseEventArgs e)
+        {
+            Point p = e.GetPosition(Canvas);
+            var rc = UIElements.Last() as RectangleControl;
+            rc.RectWidth = p.X - rc.RectX;
+            rc.RectHeight = p.Y - rc.RectY;
+        }
+
+        private void OnCanvasMouseLeftButtonUp(object send, MouseButtonEventArgs e)
+        {
+            Canvas.PreviewMouseMove -= OnCanvasMouseMove;
+            Canvas.PreviewMouseLeftButtonDown -= OnCanvasMouseLeftButtonDown;
+            Canvas.PreviewMouseLeftButtonUp -= OnCanvasMouseLeftButtonUp;
         }
 
         private void OnMouseDown(object send, MouseButtonEventArgs e)
@@ -135,16 +170,35 @@ namespace MvvmLight1.ViewModel
 
         private void ReadFrame()
         {
-            stop = true;
+            stop = false;
             if (Cv.OpenCamera(0))
             {
-                while (stop)
+                while (!stop)
                 {
+                    
+                    DateTime beforDT = System.DateTime.Now;
                     Application.Current.Dispatcher.Invoke(new Action(() =>
                     {
-                        ImgSourc = Cv.ReadBitmapFrame();
+                        switch (mode)
+                        {
+                            case 1:
+                                ImgSourc = Cv.MatchTemplateFrame();
+                                break;
+                            default:
+                                ImgSourc = Cv.ReadBitmapFrame();
+                                break;
+                        }
+                        
                     }));
-                    Thread.Sleep(30);
+                    TimeSpan ts = DateTime.Now.Subtract(beforDT);
+
+                    
+                    int sleepDT = (int)(60 - ts.TotalMilliseconds);
+                    Thread.Sleep(sleepDT > 0 ? sleepDT : 5);
+                    Application.Current.Dispatcher.Invoke(new Action(() =>
+                    {
+                        Str = string.Format("FPS {1} 花费{0}ms ", ts.TotalMilliseconds,1000/ DateTime.Now.Subtract(beforDT).TotalMilliseconds);
+                    }));
                 }
                 Cv.ReleaseCamera();
             }
@@ -157,7 +211,7 @@ namespace MvvmLight1.ViewModel
 
         private void ExcuteStopCameraCmd()
         {
-            stop = false;
+            stop = true;
         }
 
         public ICommand RoiCmd
@@ -167,9 +221,9 @@ namespace MvvmLight1.ViewModel
 
         private void ExcuteRoiCmd()
         {
-            var canvas = (Canvas)VisualTreeHelper.GetParent(SelectPath);
-            double w = ImgSourc.PixelWidth / canvas.ActualWidth;
-            double h = ImgSourc.PixelHeight / canvas.ActualHeight;
+            //var canvas = (Canvas)VisualTreeHelper.GetParent(SelectPath);
+            double w = ImgSourc.PixelWidth / Canvas.ActualWidth;
+            double h = ImgSourc.PixelHeight / Canvas.ActualHeight;
             Rect rect = new Rect
             {
                 X = SelectPath.RectX * w,
@@ -179,14 +233,14 @@ namespace MvvmLight1.ViewModel
             };
 
             RoiSourc = Cv.ReadBitmapFrameROI(rect);
-            //CanvasRectangle.Clear();
+            
         }
 
         public ICommand MatchTemplateCmd
         {
             get { return new DelegateCommand(o => ExcuteMatchTemplateCmd()); }
         }
-
+        
         private void ExcuteMatchTemplateCmd()
         {
             Thread td = new Thread(ReadMatchTemplateFrame);
@@ -196,19 +250,7 @@ namespace MvvmLight1.ViewModel
 
         private void ReadMatchTemplateFrame()
         {
-            stop = true;
-            if (Cv.OpenCamera(0))
-            {
-                while (stop)
-                {
-                    Thread.Sleep(30);
-                    Application.Current.Dispatcher.Invoke(new Action(() =>
-                    {
-                        ImgSourc = Cv.MatchTemplateFrame();
-                    }));
-                }
-                Cv.ReleaseCamera();
-            }
+            mode = 1;
         }
 
         #endregion

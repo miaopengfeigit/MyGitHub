@@ -401,13 +401,13 @@ namespace Common
         private static extern int DeleteObject(IntPtr o);
         
         [DllImport("MachineVisionDll.dll")]
-        public static extern MIplImage ReadImage(string fileName);
+        private static extern MIplImage ReadImage(string fileName);
 
         [DllImport("MachineVisionDll.dll")]
-        public static extern void ShowImage();
+        private static extern void ShowImage();
 
         [DllImport("MachineVisionDll.dll")]
-        public static extern MIplImage FindCircleCenter();
+        private static extern MIplImage FindCircleCenter();
 
         [DllImport("MachineVisionDll.dll")]
         public static extern bool OpenCamera(int id);
@@ -416,14 +416,17 @@ namespace Common
         public static extern void ReleaseCamera();
 
         [DllImport("MachineVisionDll.dll")]
-        public static extern MIplImage ReadFrame();
+        private static extern MIplImage ReadFrame();
 
         [DllImport("MachineVisionDll.dll")]
-        public static extern MIplImage ReadROI(int x, int y, int width, int height);
+        private static extern MIplImage ReadROI(int x, int y, int width, int height);
 
         [DllImport("MachineVisionDll.dll")]
-        public static extern MIplImage MatchTemplate();
-        
+        private static extern MIplImage MatchTemplate();
+
+        [DllImport("MachineVisionDll.dll")]
+        private static extern double GetFps();
+
 
         public static BitmapSource ReadBitmapFrameROI(Rect rect)
         {
@@ -443,6 +446,10 @@ namespace Common
         public static BitmapSource MatchTemplateFrame()
         {
             return MIplImageToBitmapSource(MatchTemplate());
+        }
+        public static double GetFrameFps()
+        {
+            return GetFps();
         }
 
         private static BitmapSource MIplImageToBitmapSource(IntPtr ptr)

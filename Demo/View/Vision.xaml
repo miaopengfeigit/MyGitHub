@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
              xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
-             xmlns:dr="clr-namespace:MvvmLight1.ViewModel" 
+             xmlns:converter="clr-namespace:Common;assembly=Common" 
              xmlns:myc="clr-namespace:MvvmLight1.Controls"
              xmlns:local="clr-namespace:MvvmLight1.View"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -14,6 +14,8 @@
              >
     <UserControl.Resources>
         <ResourceDictionary>
+            <!--<converter:BoolToValueConverter x:Key="BoolToValueConverter" />-->
+            
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
@@ -25,7 +27,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-
+    
     <!--<Image Name="image1" Stretch="Fill"   Grid.Row="1" Grid.Column="1" Source="{Binding ImgSourc}"  />-->
 
     <Grid>
@@ -64,30 +66,22 @@
                         <ImageBrush ImageSource="{Binding ImgSourc}" />
                     </Canvas.Background>
                 </Canvas>-->
+        <!--<Canvas Grid.Row ="1" Name="myCanvas">
+            <Canvas.Background>
+                <ImageBrush ImageSource="{Binding ImgSourc}" />
+            </Canvas.Background>
+        </Canvas>-->
 
-        <ItemsControl Grid.Row ="1" ItemsSource="{Binding CanvasRectangle}">
+        <ItemsControl Grid.Row ="1" ItemsSource="{Binding UIElements}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas >
+                    <Canvas>
                         <Canvas.Background>
                             <ImageBrush ImageSource="{Binding ImgSourc}" />
                         </Canvas.Background>
                     </Canvas>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <myc:RectangleControl >
-
-                    </myc:RectangleControl>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-            <!--<ItemsControl.ItemContainerStyle>
-                        <Style>
-                            <Setter Property="Canvas.Left" Value="{Binding X}" />
-                            <Setter Property="Canvas.Top" Value="{Binding Y}" />
-                        </Style>
-                    </ItemsControl.ItemContainerStyle>-->
         </ItemsControl>
 
         <!--<ItemsControl Grid.Row="1" ItemsSource="{Binding CanvasVecPicture}" Width="640" Height="480" Margin="0"  >
@@ -114,10 +108,9 @@
                 </ItemsControl>-->
         
         <materialDesign:PopupBox Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
-                                 HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                 HorizontalAlignment="Right" VerticalAlignment="Bottom" 
                                  Margin="32" Grid.Row="1">
-            <StackPanel>
-                
+            <StackPanel >
                 <Button ToolTip="连续读取" Command="{Binding OpenCameraCmd}">
                     <materialDesign:PackIcon Kind="ArrowRightDropCircle" />
                 </Button>
@@ -139,13 +132,6 @@
             </StackPanel>
         </materialDesign:PopupBox>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Row="1">
-            <!--<TextBlock Text="{Binding SelectPath.Translate.X,StringFormat='##0.00'}"  Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <TextBlock Text=","  Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <TextBlock Text="{Binding SelectPath.Translate.Y,StringFormat='##0.00'}" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-
-                    <TextBlock Text="{Binding SelectPath.MyGeometry.Rect.Width,StringFormat='##0.00'}"  Margin="20,5,5,5" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <TextBlock Text="x"  Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <TextBlock Text="{Binding SelectPath.MyGeometry.Rect.Height,StringFormat='##0.00'}" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center"/>-->
             <TextBlock FontWeight="Bold" Text="{Binding SelectPath.RectX,StringFormat='##0.00'}"  Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <TextBlock FontWeight="Bold"  Text=","  Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <TextBlock FontWeight="Bold"  Text="{Binding SelectPath.RectY,StringFormat='##0.00'}" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -154,7 +140,13 @@
             <TextBlock FontWeight="Bold"  Text="x"  Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <TextBlock FontWeight="Bold"  Text="{Binding SelectPath.RectHeight,StringFormat='##0.00'}" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
-
+            <!--<TextBlock FontWeight="Bold"  Text="mmm" Visibility= "{Binding ElementName=shao,Path=IsChecked, Converter={StaticResource BoolToValueConverter}, ConverterParameter=Visible, FallbackValue=Collapsed}"/>
+            <CheckBox Name="shao"/>
+            <TextBlock Text="is" Visibility="{Binding ElementName=shao,Path=IsChecked,Converter={StaticResource BooleanToVisibilityConverter}}"/>-->
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1">
+            <TextBlock FontWeight="Bold" Text="{Binding Str}"  Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            
         </StackPanel>
         <Image Grid.Row="1" MaxWidth="160" MaxHeight="120" HorizontalAlignment="Right" VerticalAlignment="Top" Source="{Binding RoiSourc}"></Image>
 

@@ -28,6 +28,7 @@ namespace MvvmLight1.View
         {
             InitializeComponent();
             DataContext = visionViewModel;
+            //visionViewModel.Canvas = myCanvas;
         }
     }
 

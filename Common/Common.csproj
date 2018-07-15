@@ -59,6 +59,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BoolToValueConverter.cs" />
     <Compile Include="ConvertHelper.cs" />
     <Compile Include="FileHelper.cs" />
     <Compile Include="IplImage .cs" />

@@ -12,6 +12,7 @@
         <!--Global View Model Locator-->
 
         <ResourceDictionary>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <ResourceDictionary.MergedDictionaries>
                 <!--<ResourceDictionary Source="pack://siteOfOrigin:,,,/Langs/en-US.xaml"/>-->
                 <ResourceDictionary Source="pack://siteOfOrigin:,,,/Resources/Language/zh-CN.xaml"/>

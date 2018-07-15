@@ -42,7 +42,7 @@ void CannyThreshold(int, void*)
 int main(int argc, char** argv)
 {
 	/// ×°ÔØÍ¼Ïñ
-	src = imread("E:\\Image\\1\\1.bmp");
+	src = imread("C:\\1.bmp");
 
 	if (!src.data)
 	{
