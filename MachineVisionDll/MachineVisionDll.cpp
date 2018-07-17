@@ -2,10 +2,21 @@
 
 #define DLL_API extern "C" _declspec(dllexport)     
 #include <opencv2\opencv.hpp>  
+#include <iostream>
+#include <sstream>
+#include <string>
+using namespace std;
 using namespace cv;
 
 VideoCapture capture;
 Mat image, imageROI;
+
+template<typename T> String toString(const T& t) 
+{
+	ostringstream oss;  //创建一个格式化输出流
+	oss << t;             //把值传递如流中
+	return oss.str();
+}
 
 DLL_API IplImage _stdcall ReadImage(char* fileName)
 {
@@ -71,10 +82,13 @@ DLL_API IplImage  _stdcall MatchTemplate()
 
 
 	//cout << "匹配度：" << minVal << endl;
-
-	matchLoc = minLoc;
-
-	rectangle(image, matchLoc, Point(matchLoc.x + imageROI.cols, matchLoc.y + imageROI.rows), Scalar(0, 255, 0), 1, 8, 0);
+	if (1 > 0.8)
+	{
+		matchLoc = minLoc;
+		rectangle(image, matchLoc, Point(matchLoc.x + imageROI.cols, matchLoc.y + imageROI.rows), Scalar(0, 255, 0), 1, 8, 0);
+		
+		putText(image, toString(maxVal), Point(matchLoc.x + imageROI.cols, matchLoc.y + imageROI.rows), FONT_HERSHEY_SCRIPT_COMPLEX, 1, Scalar::all(255));
+	}
 	
 	return IplImage(image);
 }

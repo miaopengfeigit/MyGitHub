@@ -39,7 +39,7 @@ void CannyThreshold(int, void*)
 
 
 /** @º¯Êı main */
-int main(int argc, char** argv)
+int maincannny(int argc, char** argv)
 {
 	/// ×°ÔØÍ¼Ïñ
 	src = imread("C:\\1.bmp");

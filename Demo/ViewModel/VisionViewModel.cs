@@ -194,7 +194,7 @@ namespace MvvmLight1.ViewModel
 
                     
                     int sleepDT = (int)(60 - ts.TotalMilliseconds);
-                    Thread.Sleep(sleepDT > 0 ? sleepDT : 5);
+                    Thread.Sleep(sleepDT > 0 ? sleepDT : 30);
                     Application.Current.Dispatcher.Invoke(new Action(() =>
                     {
                         Str = string.Format("FPS {1} 花费{0}ms ", ts.TotalMilliseconds,1000/ DateTime.Now.Subtract(beforDT).TotalMilliseconds);

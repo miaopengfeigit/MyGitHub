@@ -38,5 +38,11 @@
     <ClCompile Include="Canny.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="calibrate.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="canlibration.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
